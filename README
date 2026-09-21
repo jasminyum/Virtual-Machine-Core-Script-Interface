@@ -1,0 +1,203 @@
+# Modbus Portal & Edge Gateway Scripting Engine
+
+Modbus Portal is a dual-component industrial IoT solution consisting of a C# .NET 8.0 Windows Forms configuration interface and a C++ Linux-based edge execution engine. It acts as a master gateway that routes Modbus TCP communications, manages up to 5 downstream Modbus devices, and executes custom user-defined scripts natively on the edge gateway.
+
+## Core Features
+
+* **Edge Gateway Management:** Configure up to 5 distinct Modbus devices by assigning their IP addresses, Ports, Slave IDs, and Scan Times.
+
+
+* **Custom Script Compiler:** A built-in IDE that transpiles C-like and Assembly scripts into a proprietary bytecode format. The compiled bytecode is pushed to the gateway's Modbus holding registers (starting at register `8000`) for remote execution.
+
+
+* **Virtual Machine Execution Engine:** The C++ backend utilizes `libmodbus` to run a virtual OS capable of executing the compiled bytecode. It supports advanced operations including multithreading, conditional branching (if/else, while, for), and floating-point mathematical functions (sin, cos, tan, sqrt, abs).
+
+
+* **Variable Management:** Map named variables to specific Modbus addresses and define their data types (INT, REAL, BOOL, STRING). Supports bulk importing variable maps via CSV files.
+
+
+* **Live Monitoring & Control:** Real-time data polling and visualization of the selected downstream Modbus device, alongside manual Modbus write capabilities.
+
+
+* **Safety Mechanisms:** Includes an emergency stop feature to immediately suspend all macro executions and device scanning. The C++ engine incorporates a macro watchdog that halts execution if the instruction limit is exceeded or an infinite loop is detected.
+
+
+
+## System Architecture
+
+### 1. Client Application (C# WinForms)
+
+* **Framework:** .NET 8.0.
+
+
+* **Dependencies:** `EasyModbusTCP` for Modbus communication.
+
+
+* **Main Interface (`Form1.cs`):** Manages gateway connection settings, compiles user scripts, and pushes configuration payloads to the C++ edge gateway.
+
+
+* **Variable Dictionary (`FormDegisken.cs`):** Manages user-defined variables and their memory allocations within the Modbus register map.
+
+
+* **Syntax Helper (`FormOzellik.cs`):** Provides built-in query-based documentation for Assembly, Python, and C script commands.
+
+
+
+### 2. Edge Execution Engine (C++)
+
+* **Environment:** Designed for Linux / VM OS 3.0 environments and syslog integration.
+
+
+* **Dependencies:** `libmodbus`.
+
+
+* **Execution (`main.cpp`):** Listens on TCP port `5020`. It runs an endless loop scanning the defined Modbus devices at their respective intervals and executing the parsed bytecode instructions loaded into its memory map.
+
+
+
+## Modbus Memory Map Overview
+
+The system utilizes a structured Modbus register map to synchronize the client and the edge engine:
+
+* **1001 - 1030:** Device configurations (IP, Port, Slave ID, Scan Time, Active Status).
+
+
+* **8000+:** Compiled script bytecode storage.
+
+
+* **8499:** System continuous mode / Emergency stop flag.
+
+
+* **8500:** Script execution trigger / status flag (1 = Trigger Run, 2 = Running, 3 = Error/Watchdog Triggered).
+
+
+* **8501 - 8530:** Edge system string response storage (e.g., logging output).
+
+
+* **9000+:** Base data registers for the polled downstream devices (each device receives a block of 200 registers).
+
+
+## Supported Scripting Languages & Examples
+
+The Modbus Portal engine features a custom compiler that converts human-readable scripts into edge-executable bytecode. Users can write logic using either a **C-like syntax** or low-level **Assembly**. The system also includes placeholders for future Python support.
+
+Before running these scripts, users must map their variables (e.g., `Sensor1`, `MotorSpeed`) to Modbus addresses using the "Değişken Ata" (Assign Variable) interface.
+
+### 1. C-Like Syntax (Recommended)
+
+The C-style language supports standard programming paradigms, making it easy to write complex automation logic directly on the edge gateway.
+
+Supported Capabilities:
+
+* **Control Structures:** `if / else`, `while`, `do-while`, `for`, `switch / case`.
+* **Math Functions:** `sin()`, `cos()`, `tan()`, `sqrt()`, `abs()`, `strlen()`.
+* **Modbus Operations:** `modbus_read(device_id, address)` and `modbus_write(device_id, address, value)`.
+* **Advanced Execution:** `thread {}` for multithreading, `delay(ms)` for timers, and `void custom_func() {}` for subroutines.
+* **Error Handling:** `on_error_goto(label);` for safe fault management.
+
+#### Example 1: Basic Automation & Math
+
+This script reads sensor values, performs mathematical operations, and sets a boolean flag based on a threshold.
+
+```c
+// Calculate the absolute difference between two sensors
+diff = abs(Sensor1 - Sensor2);
+
+// Apply a mathematical formula
+float_result = sqrt(diff) * sin(3.14);
+
+// Conditional logic for alarms
+if (float_result >= 50.5) {
+    AlarmFlag = 1;
+} else {
+    AlarmFlag = 0;
+}
+
+```
+
+#### Example 2: Modbus Routing (Master Read/Write)
+
+You can directly command the Edge Gateway to read from one downstream Modbus device and write to another.
+
+```c
+void route_data() {
+    // Read holding register from Device 0, Address 40001
+    int temp_val = modbus_read(0, 40001);
+    
+    // Add offset
+    temp_val = temp_val + 15;
+    
+    // Write the new value to Device 1, Address 40010
+    modbus_write(1, 40010, temp_val);
+}
+
+// Call the function
+route_data();
+
+```
+
+#### Example 3: Multithreading & Continuous Loops
+
+The engine supports concurrent execution using threads, allowing you to run background tasks without blocking the main logic.
+
+```c
+// Start a parallel background thread
+thread {
+    while(true) {
+        // Blink a heartbeat register every 1 second
+        Heartbeat = 1;
+        delay(1000);
+        Heartbeat = 0;
+        delay(1000);
+    }
+}
+
+// Main execution continues here
+for(i = 0; i < 10; i++) {
+    ProcessCount++;
+    delay(500);
+}
+
+```
+
+#### Example 4: Error Handling & Jumps
+
+You can define custom labels and fallback logic in case a runtime error occurs (e.g., division by zero or Modbus timeout).
+
+```c
+// Set an error jump point
+on_error_goto(ErrorState);
+
+// Risky operation
+Result = Value / Divisor;
+goto End;
+
+ErrorState:
+    Result = -1; // Fallback value
+    ErrorFlag = 1;
+
+End:
+    delay(100);
+
+```
+
+### 2. Assembly Syntax (Advanced Users)
+
+For users who require direct memory and register manipulation, the engine accepts a proprietary Assembly format. The format strictly follows the structure: `COMMAND SOURCE1 SOURCE2 DESTINATION`.
+
+Common Assembly Commands:
+`ADD`, `SUB`, `MUL`, `DIV`, `MOV`, `INC`, `DEC`, `FADD` (Float Add), `JMP`, `JMPF`, `MODBUS_READ`, `MODBUS_WRITE`.
+
+#### Example: Basic Assembly Operations
+
+```assembly
+// Add 50 to Sensor1 and store in TempVar
+ADD Sensor1 50 TempVar
+
+// Multiply TempVar by 2 and store in Result
+MUL TempVar 2 Result
+
+// Floating point addition
+FADD RealSensor1 RealSensor2 RealResult
+
+```
