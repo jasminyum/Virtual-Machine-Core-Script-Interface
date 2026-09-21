@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "dgSpecHash": "RRQjuBHl3Q8=",
+  "success": true,
+  "projectFilePath": "C:\\yasmin\\u\\_______Lessons\\2026-27 Güz\\+++++BİTİRME TEZİ\\PC_Arayuz\\modbus_portal\\modbus_portal.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ytaal\\.nuget\\packages\\easymodbustcp\\5.6.0\\easymodbustcp.5.6.0.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.android-arm.runtime.native.system.io.ports\\10.0.9\\runtime.android-arm.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.android-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.android-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.android-x64.runtime.native.system.io.ports\\10.0.9\\runtime.android-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.android-x86.runtime.native.system.io.ports\\10.0.9\\runtime.android-x86.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\10.0.9\\runtime.linux-arm.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-bionic-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-bionic-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-bionic-x64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-bionic-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-musl-arm.runtime.native.system.io.ports\\10.0.9\\runtime.linux-musl-arm.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-musl-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-musl-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-musl-x64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-musl-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\10.0.9\\runtime.linux-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.maccatalyst-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.maccatalyst-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.maccatalyst-x64.runtime.native.system.io.ports\\10.0.9\\runtime.maccatalyst-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.native.system.io.ports\\10.0.9\\runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.osx-arm64.runtime.native.system.io.ports\\10.0.9\\runtime.osx-arm64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\10.0.9\\runtime.osx-x64.runtime.native.system.io.ports.10.0.9.nupkg.sha512",
+    "C:\\Users\\ytaal\\.nuget\\packages\\system.io.ports\\10.0.9\\system.io.ports.10.0.9.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "message": "'EasyModbusTCP 5.6.0' paketi, proje hedef çerçevesi 'net8.0-windows7.0' yerine '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' kullanılarak geri yüklendi. Bu paket projenizle tamamen uyumlu olmayabilir.",
+      "projectPath": "C:\\yasmin\\u\\_______Lessons\\2026-27 Güz\\+++++BİTİRME TEZİ\\PC_Arayuz\\modbus_portal\\modbus_portal.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\yasmin\\u\\_______Lessons\\2026-27 Güz\\+++++BİTİRME TEZİ\\PC_Arayuz\\modbus_portal\\modbus_portal.csproj",
+      "libraryId": "EasyModbusTCP",
+      "targetGraphs": [
+        "net8.0-windows"
+      ]
+    }
+  ]
+}
