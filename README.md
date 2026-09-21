@@ -2,6 +2,9 @@
 
 Modbus Portal is a dual-component industrial IoT solution consisting of a C# .NET 8.0 Windows Forms configuration interface and a C++ Linux-based edge execution engine. It acts as a master gateway that routes Modbus TCP communications, manages up to 5 downstream Modbus devices, and executes custom user-defined scripts natively on the edge gateway.
 
+## Screenshots
+<img width="1919" height="1079" alt="Ekran görüntüsü 2026-09-10 174311" src="https://github.com/user-attachments/assets/030aae9a-0137-4b62-bbf5-b7a48ad74237" />
+
 ## Core Features
 
 * **Edge Gateway Management:** Configure up to 5 distinct Modbus devices by assigning their IP addresses, Ports, Slave IDs, and Scan Times.
